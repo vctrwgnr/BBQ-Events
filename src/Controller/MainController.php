@@ -1,28 +1,35 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Event;
+use App\Repository\EventRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MainController{
-#[Route('/', name: 'home')]
+class MainController extends AbstractController{
+#[Route('/', name: 'app_main_home')]
 public function home() : Response
 {
-    return new Response("Hi beautiful");
+    return $this->render('main/home.html.twig');
 
 }
 
-    #[Route('/show/{slug}', name: 'show')]
-    public function show(string $slug = null) : Response
-    {
 
-        if($slug){
-            $y = str_replace('_', ' ', $slug);
-            $x = ucwords($y);
-            return new Response("Hi $x");
-        }else{
-            return new Response("Hi guest!");
-        }
-    }
+//    #[Route('/show/{id}', name: 'show')]
+//    public function show(string $id = null, EventRepository $eventRepository ) : Response
+//    {
+//        $data = ['parties' => $eventRepository->findOne($id)];
+//
+//        return $this->render('main/show.html.twig', $data);
+//
+////        if($slug){
+////            $y = str_replace('_', ' ', $slug);
+////            $x = ucwords($y);
+////            return new Response("Hi $x");
+////        }else{
+////            return new Response("Hi guest!");
+////        }
+//    }
 
 }

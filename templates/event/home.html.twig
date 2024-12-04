@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container my-4">
+        <h2 class="mb-4">Tickets</h2>
+        <div class="row g-4">
+            {% for party in parties %}
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <!-- Card Image -->
+                        <img src="{{ asset('img/default.jpg') }}" class="card-img-top" alt="Image of {{ party.name }}">
+
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <h5 class="card-title">{{ party.name }}</h5>
+
+                            <!-- Ticket Availability Message -->
+                            {% if party.seats == 0 %}
+                                <p class="card-text text-danger">Tickets are sold out.</p>
+                            {% elseif party.seats >= 10 and party.seats < 100 %}
+                                <p class="card-text text-warning">Only {{ party.seats }} tickets left! Last chance!</p>
+                            {% elseif party.seats >= 100 %}
+                                <p class="card-text text-success">{{ party.seats }} tickets available.</p>
+                            {% endif %}
+
+                            <!-- Details Button -->
+                            <a href="{{ path('app_event_show', {id: party.id}) }}" class="btn btn-info custom-btn">Details</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
