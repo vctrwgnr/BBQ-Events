@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | New Location {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ location ? 'Edit Location' : 'Create New Location' }}</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success">{{ location ? 'Save Changes' : 'Create' }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

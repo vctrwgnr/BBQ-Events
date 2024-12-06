@@ -1,26 +1,24 @@
 {% extends 'base.html.twig' %}
 {% block title %}
     {{ parent() }}
-    Events
+    | Details
 {% endblock %}
 
 {% block body %}
     <div class="container">
         <br>
-        <h2>Party Details</h2>
+        <h2>Event Details</h2>
 
-{#        {% if party %}#}
-            <p><strong>Name:</strong> {{ party.name }}</p>
-            <p><strong>Description:</strong> {{ party.description }}</p>
-            <p><strong>Location:</strong> {{ party.location }}</p>
-            <p><strong>Booked Seats:</strong> {{ party.bookedSeats }}</p>
-{#        {% else %}#}
-{#            <p>Party not found.</p>#}
-{#        {% endif %}#}
-        <a href="#">EDIT</a>
-        <a href="#">DELETE</a>
+            <p><strong>Name:</strong> {{ event.name }}</p>
+            <p><strong>Description:</strong> {{ event.description }}</p>
+            <p><strong>Booked Seats:</strong> {{ event.bookedSeats }}</p>
 
-        <a href="{{ path('app_main_home') }}">HOME</a>
+        <div class="mt-4">
+
+            <a href="{{ path('app_event_edit', {id: event.id}) }}" class="btn btn-outline-info me-3">EDIT</a>
+
+            <a href="{{ path('app_event_delete', {id: event.id}) }}" type="button" class="btn btn-outline-danger">DELETE</a>
+        </div>
 
     </div>
 {% endblock %}

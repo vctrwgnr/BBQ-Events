@@ -1,19 +1,37 @@
 <?php
 namespace App\Controller;
 
-use App\Model\Event;
+use App\Entity\Event;
 use App\Repository\EventRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+
 
 class MainController extends AbstractController{
 #[Route('/', name: 'app_main_home')]
-public function home() : Response
+public function home(EventRepository $eventRepository) : Response
 {
-    return $this->render('main/home.html.twig');
+    $events = $eventRepository->findAll();
+    return $this->render('main/home.html.twig', ['events' => $events],);
 
 }
+
+
+
+    #[Route('/event/{id}/like', name: 'app_event_like', methods: ['POST'])]
+    public function like(Event $event, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $event->incrementLikes();
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_main_home');
+    }
+
+
 
 
 //    #[Route('/show/{id}', name: 'show')]

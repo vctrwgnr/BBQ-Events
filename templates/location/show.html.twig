@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }}
+    | Details
+{% endblock %}
+
+
+
+{% block body %}
+    <div class="container">
+        <br>
+        <h2>Location Details</h2>
+
+{#        {% if party %}#}
+            <p><strong>Name:</strong> {{ location.name }}</p>
+            <p><strong>Description:</strong> {{ location.description }}</p>
+            <p><strong>Address:</strong> {{ location.address }}</p>
+            <p><strong>Capacity:</strong> {{ location.capacity }}</p>
+{#        {% else %}#}
+{#            <p>Party not found.</p>#}
+{#        {% endif %}#}
+        <div class="mt-4">
+
+            <a href="{{ path('app_location_edit', {id: location.id}) }}" class="btn btn-outline-info me-3">EDIT</a>
+
+            <a href="{{ path('app_location_delete', {id: location.id}) }}" type="button" class="btn btn-outline-danger">DELETE</a>
+        </div>
+
+
+    </div>
+{% endblock %}

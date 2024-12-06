@@ -1,24 +1,24 @@
 <?php
 namespace App\Model;
-class Event{
-
+class Location{
     /**
      * @param int $id
      * @param string $name
      * @param string $description
-     * @param string $location
-     * @param int $bookedSeats
+     * @param string $address
+     * @param int|null $capacity
      */
+
+
     public function __construct(
         private int $id,
         private string $name,
         private string $description,
-        private string $location,
-        private int $bookedSeats
-    )
-    {
+        private string $address,
+        private ?int $capacity = null
 
-    }
+    )
+    {}
 
     public function getId(): int
     {
@@ -35,22 +35,18 @@ class Event{
         return $this->description;
     }
 
-    public function getLocation(): string
+    public function getAddress(): string
     {
-        return $this->location;
+        return $this->address;
     }
 
-    public function getBookedSeats(): int
+    public function getCapacity(): ?int
     {
-        return $this->bookedSeats;
-    }
-    public function seats(): int{
-        return 200 - $this->bookedSeats;
+        return $this->capacity;
     }
 
-    public function setName(string $string)
-    {
-    }
+
+
 
 
 }

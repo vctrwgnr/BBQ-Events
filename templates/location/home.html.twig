@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }}
+    | Locations
+{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+    {# Display flash messages if any #}
+    {% if app.session.flashbag.has('success') %}
+        <div class="alert alert-success">
+            {% for message in app.session.flashbag.get('success') %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="container my-4">
+        <h2 class="mb-4">Locations</h2>
+        <div class="row g-4">
+            {% for location in locations %}
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <!-- Card Image -->
+                        <img src="{{ asset('img/' ~ location.name ~ '.jpg') }}" class="card-img-top"
+                             alt="Image of {{ location.name }}">
+
+
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <h5 class="card-title">{{ location.name }}</h5>
+
+
+                            <!-- Details Button -->
+                            <a href="{{ path('app_location_show', {id: location.id}) }}"
+                               class="btn btn-info custom-btn">Details</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
