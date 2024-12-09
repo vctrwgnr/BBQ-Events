@@ -19,19 +19,43 @@ class LocationController extends AbstractController{
 
     }
 
+//    #[Route('/location/new', name: 'app_location_new')]
+//    public function new(EntityManagerInterface $entityManager, Request $request): Response
+//    {
+//        $location = new Location();
+//        $form = $this->createForm(LocationType::class, $location);
+//        $form->handleRequest($request);
+//
+////        $location->setName('Hamburg')
+////            ->setDescription('Conference Hall')
+////            ->setAddress('Haupstr 10')
+////            ->setCapacity(20);
+//        $entityManager->persist($location);
+//        $entityManager->flush();
+//
+////        return new Response('The data was added successfully');
+//        return $this->redirectToRoute('app_location_location');
+//    }
+
     #[Route('/location/new', name: 'app_location_new')]
-    public function new(EntityManagerInterface $entityManager): Response
+    public function new(EntityManagerInterface $entityManager, Request $request): Response
     {
         $location = new Location();
-        $location->setName('Hamburg')
-            ->setDescription('Conference Hall')
-            ->setAddress('Haupstr 10')
-            ->setCapacity(20);
-        $entityManager->persist($location);
-        $entityManager->flush();
+        $form = $this->createForm(LocationType::class, $location);
+        $form->handleRequest($request);
 
-        return new Response('The data was added successfully');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($location);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_location_location');
+        }
+
+        return $this->render('location/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
+
 
     #[Route('/location/show/{id}', name: 'app_location_show')]
     public function show(int $id, LocationRepository $locationRepository): Response
@@ -50,11 +74,21 @@ class LocationController extends AbstractController{
     }
 
     #[Route('/location/{id}/edit', name: 'app_location_edit')]
-    public function edit(Location $location, EntityManagerInterface $entityManager): Response
+    public function edit(Location $location, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $entityManager->persist($location);
-        $entityManager->flush();
-        return $this->redirectToRoute('app_location_show', ['id' => $location->getId()]);
+        $form = $this->createForm(LocationType::class, $location);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($location);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_location_show', ['id' => $location->getId()]);
+
+        }
+
+        return $this->render('location/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
 
@@ -68,8 +102,9 @@ class LocationController extends AbstractController{
             $entityManager->flush();
             $this->addFlash('success', 'Location has been deleted.');
         }
-
         return $this->redirectToRoute('app_location_location');
+
+
     }
 
 }

@@ -15,13 +15,13 @@
         </div>
     {% endif %}
     <div class="container my-4">
-        <h2 class="mb-4">Availability</h2>
+        <h2 class="mb-4">Events</h2>
         <div class="row g-4">
             {% for event in events %}
                 <div class="col-md-4">
                     <div class="card h-100">
                         <!-- Card Image -->
-                        <img src="{{ asset('img/' ~ event.id ~ '.jpg') }}" class="card-img-top" alt="Image of {{ event.name }}">
+                        <img src="{{ asset(event.imagePath)}}" class="card-img-top" alt="Image of {{ event.name }}">
 
 
                         <!-- Card Body -->

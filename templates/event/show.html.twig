@@ -9,11 +9,16 @@
         <br>
         <h2>Event Details</h2>
 
-            <p><strong>Name:</strong> {{ event.name }}</p>
-            <p><strong>Description:</strong> {{ event.description }}</p>
-            <p><strong>Booked Seats:</strong> {{ event.bookedSeats }}</p>
+
+        <ul class="list-group d-flex flex-column" style="flex: 1;">
+            <li class="list-group-item"><strong>Name:</strong> {{ event.name }}</li>
+            <li class="list-group-item"><strong>Description:</strong> {{ event.description }}</li>
+            <li class="list-group-item"><strong>Booked Spots:</strong> {{ event.bookedSeats }}</li>
+
+        </ul>
 
         <div class="mt-4">
+            <a href="{{ path('app_event_event', {id: event.id}) }}" class="btn btn-outline-info me-3">GO BACK</a>
 
             <a href="{{ path('app_event_edit', {id: event.id}) }}" class="btn btn-outline-info me-3">EDIT</a>
 

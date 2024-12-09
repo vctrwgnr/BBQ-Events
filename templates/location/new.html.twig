@@ -3,12 +3,15 @@
 {% block title %} {{ parent() }} | New Location {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>{{ location ? 'Edit Location' : 'Create New Location' }}</h1>
-
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn btn-success">{{ location ? 'Save Changes' : 'Create' }}</button>
-        {{ form_end(form) }}
+    <div class="container mt-5">
+        <h1 class="mb-4">Create a New Location</h1>
+        {{ form_start(form) }} {# Renders the opening form tag and applies Bootstrap styles #}
+        {{ form_row(form.name) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.address) }}
+        {{ form_row(form.capacity) }}
+        {{ form_row(form.save) }}
+        {{ form_end(form) }} {# Renders the closing form tag #}
     </div>
 {% endblock %}
+

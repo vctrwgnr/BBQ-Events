@@ -2,22 +2,36 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Form\EventType;
 use App\Repository\EventRepository;
 use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 //#[Route('/event')]
-class EventController extends AbstractController{
+class EventController extends AbstractController
+{
     #[Route('/event', name: 'app_event_event')]
-    public function index(EventRepository $eventRepository) : Response
+    public function index(EventRepository $eventRepository): Response
     {
+        $events = $eventRepository->findAll();
+        $defaultImagePath = 'img/default.jpg';
 
-        $data = ['events' => $eventRepository->findAll()];
+        foreach ($events as $event) {
+            $imagePath = $this->getParameter('kernel.project_dir') . '/public/img/' . $event->getId() . '.jpg';
+            if (!file_exists($imagePath)) {
+                $event->imagePath = $defaultImagePath;
+            } else {
+                $event->imagePath = 'img/' . $event->getId() . '.jpg';
+            }
+        }
 
+        return $this->render('event/home.html.twig', [
+            'events' => $events,
+        ]);
 
-        return $this->render('event/home.html.twig', $data);
 
     }
 
@@ -38,17 +52,29 @@ class EventController extends AbstractController{
 
 
     #[Route('/event/{id}/edit', name: 'app_event_edit')]
-    public function edit(Event $event, EntityManagerInterface $entityManager): Response
+    public function edit(Event $event, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $entityManager->persist($event);
-        $entityManager->flush();
-        return $this->redirectToRoute('app_event_show', ['id' => $event->getId()]);
+//        $event = new Event();
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($event);
+            $entityManager->flush();
+            return $this->redirect($this->generateUrl('app_event_show', ['id' => $event->getId()]));
+        }
+
+        return $this->render('event/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
 
     #[Route('/event/{id}/delete', name: 'app_event_delete')]
-    public function delete(Event $event, EntityManagerInterface $entityManager): Response
+    public function delete(Event $event, EntityManagerInterface $entityManager, Request $request): Response
     {
+//
+//        $form = $this->createForm(EventType::class, $event);
+//        $form->handleRequest($request);
 
 
         if ($event) {
@@ -56,25 +82,54 @@ class EventController extends AbstractController{
             $entityManager->flush();
             $this->addFlash('success', 'Event has been deleted.');
         }
+//        $this->addFlash('success', 'The Event was successfully updated');
 
         return $this->redirectToRoute('app_event_event');
     }
+
+
+
     #[Route('/event/new', name: 'app_event_new')]
-    public function new(EntityManagerInterface $entityManager): Response
+    public function new(EntityManagerInterface $entityManager, Request $request): Response
     {
+//        dd($request->query->all());
+//        $event = new Event();
+//        $form = $this->createForm(EventType:: class, $event);
+//        $form->handleRequest($request);
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $entityManager->persist($event);
+//            $entityManager->flush();
+//        }
         $event = new Event();
-        $event->setName('Career Day')
-            ->setDescription('Create Your Future')
-            ->setBookedSeats(20);
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+//        $event->setName('Career Day')
+//            ->setDescription('Create Your Future')
+//            ->setBookedSeats(20);
 //        dd($event);
-        $entityManager->persist($event);
-        $entityManager->flush();
-//        return $this->render('event/new.html.twig', [])
-        return new Response('The data was added successfully');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($event);
+            $entityManager->flush();
+        return $this->redirect($this->generateUrl('app_event_event'));
+        }
+
+        return $this->render('event/new.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
 
 
+//    #[Route('/event/test', name: 'app_event_test')]
+//    public function test(Request $request): Response
+//    {
+//        if ($request->isMethod('GET')) {
+//            return $this->render('event/test.html.twig');
+//        } elseif ($request->isMethod('POST')) {
+//            return new Response ('hi from post');
+//        }
+//
+//    }
 
 
 }

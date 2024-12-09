@@ -1,10 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} {{ parent() }} | New Event {% endblock %}
+
 {% block body %}
-
-{% endblock %}
-
-{% block title %}
-
+    <div class="container mt-5">
+        <h1 class="mb-4">Create a New Event</h1>
+        {{ form_start(form) }} {# Renders the opening form tag and applies Bootstrap styles #}
+        {{ form_row(form.name) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.bookedSeats) }}
+        {{ form_row(form.likes) }}
+        {{ form_row(form.save) }}
+        {{ form_end(form) }} {# Renders the closing form tag #}
+    </div>
 {% endblock %}
 
