@@ -65,6 +65,7 @@ class LocationController extends AbstractController{
         if($location){
             return $this->render('location/show.html.twig', [
                 'location' => $location,
+
             ]);
         }else{
             return new Response('No Location Found');

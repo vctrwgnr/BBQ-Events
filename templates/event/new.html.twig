@@ -5,13 +5,13 @@
 {% block body %}
     <div class="container mt-5">
         <h1 class="mb-4">Create a New Event</h1>
-        {{ form_start(form) }} {# Renders the opening form tag and applies Bootstrap styles #}
+        {{ form_start(form) }}
         {{ form_row(form.name) }}
         {{ form_row(form.description) }}
         {{ form_row(form.bookedSeats) }}
         {{ form_row(form.likes) }}
+        {{ form_row(form.location) }} {# Dropdown for selecting location #}
         {{ form_row(form.save) }}
-        {{ form_end(form) }} {# Renders the closing form tag #}
+        {{ form_end(form) }}
     </div>
 {% endblock %}
-

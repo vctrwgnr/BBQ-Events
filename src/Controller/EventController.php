@@ -72,10 +72,6 @@ class EventController extends AbstractController
     #[Route('/event/{id}/delete', name: 'app_event_delete')]
     public function delete(Event $event, EntityManagerInterface $entityManager, Request $request): Response
     {
-//
-//        $form = $this->createForm(EventType::class, $event);
-//        $form->handleRequest($request);
-
 
         if ($event) {
             $entityManager->remove($event);
@@ -92,21 +88,10 @@ class EventController extends AbstractController
     #[Route('/event/new', name: 'app_event_new')]
     public function new(EntityManagerInterface $entityManager, Request $request): Response
     {
-//        dd($request->query->all());
-//        $event = new Event();
-//        $form = $this->createForm(EventType:: class, $event);
-//        $form->handleRequest($request);
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $entityManager->persist($event);
-//            $entityManager->flush();
-//        }
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
-//        $event->setName('Career Day')
-//            ->setDescription('Create Your Future')
-//            ->setBookedSeats(20);
-//        dd($event);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($event);
             $entityManager->flush();

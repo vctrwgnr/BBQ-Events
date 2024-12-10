@@ -16,6 +16,16 @@ class MainController extends AbstractController{
 public function home(EventRepository $eventRepository) : Response
 {
     $events = $eventRepository->findAll();
+    $defaultImagePath = 'img/default.jpg';
+
+    foreach ($events as $event) {
+        $imagePath = $this->getParameter('kernel.project_dir') . '/public/img/' . $event->getId() . '.jpg';
+        if (!file_exists($imagePath)) {
+            $event->imagePath = $defaultImagePath;
+        } else {
+            $event->imagePath = 'img/' . $event->getId() . '.jpg';
+        }
+    }
     return $this->render('main/home.html.twig', ['events' => $events],);
 
 }

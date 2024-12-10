@@ -16,8 +16,7 @@
             <p><strong>Description:</strong> {{ location.description }}</p>
             <p><strong>Address:</strong> {{ location.address }}</p>
             <p><strong>Capacity:</strong> {{ location.capacity }}</p>
-
-        <div class="mt-4">
+        <div class="mt-4 mb-3">
             <a href="{{ path('app_location_location', {id: location.id}) }}" class="btn btn-outline-info me-3">GO BACK</a>
 
             <a href="{{ path('app_location_edit', {id: location.id}) }}" class="btn btn-outline-info me-3">EDIT</a>
@@ -25,6 +24,9 @@
             <a href="{{ path('app_location_delete', {id: location.id}) }}" type="button" class="btn btn-outline-danger">DELETE</a>
         </div>
 
+        <div class="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5135197.424900539!2d5.176542344382673!3d51.06378509072897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479a721ec2b1be6b%3A0x75e85d6b8e91e55b!2sGermany!5e0!3m2!1sen!2sde!4v1733740973003!5m2!1sen!2sde" width="500" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
 
     </div>
 {% endblock %}
