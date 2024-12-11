@@ -20,10 +20,11 @@
 
         <div class="mt-4">
             <a href="{{ path('app_event_event', {id: event.id}) }}" class="btn btn-outline-info me-3">GO BACK</a>
-
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <a href="{{ path('app_event_edit', {id: event.id}) }}" class="btn btn-outline-info me-3">EDIT</a>
 
             <a href="{{ path('app_event_delete', {id: event.id}) }}" type="button" class="btn btn-outline-danger">DELETE</a>
+            {% endif %}
         </div>
 
     </div>
