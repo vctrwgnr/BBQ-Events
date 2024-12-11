@@ -20,6 +20,9 @@ class Category
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
+    #[ORM\Column(nullable: true, enumType: TypeEnum::class)]
+    private ?TypeEnum $type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,18 @@ class Category
     public function setEmail(?string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getType(): ?TypeEnum
+    {
+        return $this->type;
+    }
+
+    public function setType(?TypeEnum $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
