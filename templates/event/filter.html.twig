@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Events in {{ events[0].location.name }}{% endblock %}
+
+{% block body %}
+    <h1>Events in {{ events[0].location.name }}</h1>
+
+    <ul>
+        {% for event in events %}
+
+
+            <div class="card h-100">
+
+                <!-- Card Body -->
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title">{{ event.name }}</h5>
+                    <p>
+                        <i class="bi bi-geo-alt"></i> {{ event.location.name }}
+                    </p>
+                    <li class="list-group-item"><strong>Description:</strong> {{ event.description }}</li>
+
+
+                    <!-- Ticket Availability Message -->
+                    {% if event.seats == 0 %}
+                        <p class="card-text text-danger">Tickets are sold out.</p>
+                    {% elseif event.seats >= 10 and event.seats < 100 %}
+                        <p class="card-text text-warning">Only {{ event.seats }} spots left! Last chance!</p>
+                    {% elseif event.seats >= 100 %}
+                        <p class="card-text text-success">{{ event.seats }} spots available.</p>
+                    {% endif %}
+
+                    <!-- Details Button -->
+                    <div class="mt-3">
+                        <a href="{{ path('app_event_show', {id: event.id}) }}" class="btn btn-info custom-btn">Details</a>
+                        <button class="btn btn-info custom-btn" onclick="copyEventLink('{{ path('app_event_show', {'id': event.id}) }}')">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        {% else %}
+            <li>No events found for this location.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+

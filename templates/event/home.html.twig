@@ -16,6 +16,29 @@
     {% endif %}
     <div class="container my-4">
         <h2 class="mb-4">Events</h2>
+        <!-- Dropdown -->
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="bg-light p-4">
+                <h6 class="fm-bold">Choose Event's Location<span> <i class="bi bi-geo-alt"></i></span></h6>
+
+                <div class="d-flex flex-wrap gap-3">
+                    {% for event in events %}
+
+                        <a href="{{ path('filter_by_location', { id: event.location.id }) }}" class="text-link">{{ event.location.name }}</a>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-light bg-light mb-3">
+            <div class="container-fluid">
+                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+
+
         <div class="row g-4">
             {% for event in events %}
                 <div class="col-md-4">
@@ -27,6 +50,10 @@
                         <!-- Card Body -->
                         <div class="card-body d-flex flex-column justify-content-between">
                             <h5 class="card-title">{{ event.name }}</h5>
+                            <p>
+                                <i class="bi bi-geo-alt"></i> {{ event.location.name }}
+                            </p>
+
 
                             <!-- Ticket Availability Message -->
                             {% if event.seats == 0 %}

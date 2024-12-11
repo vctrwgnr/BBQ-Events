@@ -3,3 +3,9 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+filter_by_location:
+    path: /events/location/{id}
+    controller: App\Controller\EventController::filterByLocation
+    methods: [ GET ]
+

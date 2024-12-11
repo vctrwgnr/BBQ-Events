@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\Location;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use App\Repository\LocationRepository;
@@ -14,9 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class EventController extends AbstractController
 {
     #[Route('/event', name: 'app_event_event')]
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository, LocationRepository $locationRepository): Response
     {
         $events = $eventRepository->findAll();
+        $locations = $locationRepository->findAll();
         $defaultImagePath = 'img/default.jpg';
 
         foreach ($events as $event) {
@@ -30,6 +32,8 @@ class EventController extends AbstractController
 
         return $this->render('event/home.html.twig', [
             'events' => $events,
+            'locations' => $locations,
+
         ]);
 
 
@@ -103,6 +107,17 @@ class EventController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/events/location/{id}", name="filter_by_location", methods={"GET"})
+     */
+    public function filterByLocation(int $id, EventRepository $eventRepository): Response
+    {
+        $events = $eventRepository->findBy(['location' => $id]);
+
+        return $this->render('event/filter.html.twig', [
+            'events' => $events,
+        ]);
+    }
 
 
 //    #[Route('/event/test', name: 'app_event_test')]
