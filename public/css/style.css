@@ -1,0 +1,70 @@
+body {
+    color: #0f255f !important;
+    margin: 0;
+    display: flex; /* Enables a flexible layout */
+    height: 100%; /* Matches the height of the entire page */
+    min-height: 100vh; /* Ensures it’s at least the viewport height */
+}
+
+#opinion-container {
+    background-color: #f7f7f7;
+    color: #0f255f !important;
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.text-link {
+    color: #0f255f;
+    text-decoration: none;
+}
+.text-link:hover {
+    color: darkmagenta;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.custom-toggler {
+    outline: none;
+}
+.custom-toggler:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
+/* Custom button */
+.custom-btn {
+    color: white;
+
+}
+
+.custom-btn:hover {
+    background-color: var(--bs-warning, #ffc107);
+    border-color: var(--bs-warning, #ffc107);
+}
+
+
+/* Sidebar styling */
+nav.gradient-nav {
+    background: linear-gradient(45deg, #0f255f 0%, #35cae5 100%);
+    color: white;
+    height: 100%;
+    min-width: 250px;
+    padding: 1rem;
+}
+nav.gradient-nav .nav-link {
+    color: white; /* Default link color */
+    transition: color 0.3s ease;
+}
+nav.gradient-nav .nav-link:hover {
+    color: #ffeb3b; /* Hover link color */
+}
+nav.gradient-nav .nav-link.active {
+    color: #f8f9fa; /* Active link color */
+    font-weight: bold;
+}
+nav.gradient-nav .navbar-brand {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
