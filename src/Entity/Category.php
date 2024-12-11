@@ -16,7 +16,7 @@ class Category
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-    #[Assert\Email (message: 'Should be a valid email address')]
+    #[Assert\Email (message: 'Should be a valid email address, {{ value }} is not a valid email address.')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
