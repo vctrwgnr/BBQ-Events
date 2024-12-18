@@ -27,6 +27,13 @@
             BBQ
         </a>
         <ul class="nav flex-column">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li class="nav-item">
+            <span class="nav-link text-info">
+                Welcome, {{ app.user.username|default('Guest') }}
+            </span>
+                </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link {% if app.request.attributes.get('_route') == 'app_event_event' %}active{% endif %}" href="{{ path('app_event_event') }}">Events</a>
             </li>

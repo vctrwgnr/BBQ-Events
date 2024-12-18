@@ -93,19 +93,43 @@ class LocationController extends AbstractController{
     }
 
 
-    #[Route('/location/{id}/delete', name: 'app_location_delete')]
-    public function delete(int $id, LocationRepository $locationRepository, EntityManagerInterface $entityManager): Response
+    #[Route('/location/{id}/delete', name: 'app_location_delete', methods: ['POST', 'GET'])]
+    public function delete(int $id, LocationRepository $locationRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
+        //In case you want to allow deletion on cascade
+//        foreach($location->getEvents() as $event){
+//            $event->setLocation(null);
+//        }
+
+        // Fetch the location entity
         $location = $locationRepository->find($id);
 
-        if ($location) {
+        if (!$location) {
+            $this->addFlash('error', 'Location not found.');
+            return $this->redirectToRoute('app_location_location');
+        }
+
+        // Check if location has associated events
+        if ($location->getEvents()->count() > 0) {
+            $this->addFlash('error', 'Cannot delete this location because it is associated with events. Please remove the events first.');
+
+            // Return the same page without redirection
+            return $this->render('location/show.html.twig', [
+                'location' => $location,
+            ]);
+        }
+
+        // Perform the deletion
+        try {
             $entityManager->remove($location);
             $entityManager->flush();
-            $this->addFlash('success', 'Location has been deleted.');
+            $this->addFlash('success', 'Location deleted successfully.');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'An error occurred while trying to delete the location.');
         }
+
+        // Redirect to location list after deletion
         return $this->redirectToRoute('app_location_location');
-
-
     }
 
 }
